@@ -15,8 +15,8 @@ export interface Character {
   cabelos: string;
   olhos: string;
   aparencia_geral: string;
-  attributes: CharacterAttributes[];
-  skills: CharacterSkills[];
-  hierarchy: CharacterHierarchy[];
-  finances: CharacterFinances[];
+  attributes: CharacterAttributes;
+  skills: CharacterSkills;
+  hierarchy: CharacterHierarchy;
+  finances: CharacterFinances;
 }
