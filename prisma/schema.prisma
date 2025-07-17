@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model tab_user {
+  id         Int             @id @default(autoincrement())
+  email      String          @unique
+  name       String
+  password   String
+
+  characters tab_character[]
+}
+
+model tab_character {
+  id               Int                      @id @default(autoincrement())
+  nome             String
+  jogador          String
+  esteriotipo      String
+  idade            Int
+  descendencia     String
+  altura           Int
+  sexo             String
+  peso             Int
+  cabelos          String
+  olhos            String
+  aparencia_geral  String
+
+  userId           Int
+  user             tab_user                @relation(fields: [userId], references: [id])
+
+  attributes       tab_character_attributes?
+  hierarchy        tab_character_hierarchy?
+  finances         tab_character_finances?
+  skills           tab_character_skills[]
+}
+
+model tab_character_attributes {
+  id               Int           @id @default(autoincrement())
+  conhecimento     Int
+  habilidade       Int
+  vigor            Int
+  peso_maximo      Int
+  dano_adicional   Int
+  folego           Int
+  fe               Int
+  magnetismo       Int
+  acao_extra       String
+
+  characterId      Int           @unique
+  character        tab_character @relation(fields: [characterId], references: [id])
+}
+
+model tab_character_hierarchy {
+  id                        Int           @id @default(autoincrement())
+  nivel_atual               Int
+  pontos_troca_atual        Int
+  pontos_troca_necessarios  Int
+
+  characterId               Int           @unique
+  character                 tab_character @relation(fields: [characterId], references: [id])
+}
+
+model tab_character_finances {
+  id            Int           @id @default(autoincrement())
+  moedas_ouro   Int
+  moedas_prata  Int
+  moedas_cobre  Int
+
+  characterId   Int           @unique
+  character     tab_character @relation(fields: [characterId], references: [id])
+}
+
+model tab_character_skills {
+  id                   Int           @id @default(autoincrement())
+  nome                 String
+  nivel_especializacao Int
+  valor_teste          Int
+
+  characterId          Int
+  character            tab_character @relation(fields: [characterId], references: [id])
+}
