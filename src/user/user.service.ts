@@ -8,13 +8,19 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async user(id: number): Promise<tab_user | null> {
+  async getUserById(id: number): Promise<tab_user | null> {
   return this.prisma.tab_user.findUnique({
     where: { id },
   });
 }
+  
+  async getUserByEmail(email: string): Promise<tab_user | null> {
+  return this.prisma.tab_user.findUnique({
+    where: { email },
+  });
+}
 
-  async users(params: {
+  async getUsers(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.tab_userWhereUniqueInput;

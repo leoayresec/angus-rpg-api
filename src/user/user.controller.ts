@@ -16,7 +16,7 @@ export class UserController {
 
     @Get(':id')
     async getUserById(@Param('id') id: string): Promise<tab_user> {
-        const user = await this.userService.user(Number(id));
+        const user = await this.userService.getUserById(Number(id));
         if (!user) {
             throw new NotFoundException(`Usuário com ID ${id} não encontrado`);
         }
