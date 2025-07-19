@@ -8,79 +8,101 @@ datasource db {
 }
 
 model tab_user {
-  id         Int             @id @default(autoincrement())
-  email      String          @unique
-  name       String
-  password   String
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
+  password String
 
   characters tab_character[]
 }
 
 model tab_character {
-  id               Int                      @id @default(autoincrement())
-  nome             String
-  jogador          String
-  esteriotipo      String
-  idade            Int
-  descendencia     String
-  altura           Int
-  sexo             String
-  peso             Int
-  cabelos          String
-  olhos            String
-  aparencia_geral  String
+  id              Int    @id @default(autoincrement())
+  nome            String
+  jogador         String
+  esteriotipo     String
+  idade           Int
+  descendencia    String
+  altura          Int
+  sexo            String
+  peso            Int
+  cabelos         String
+  olhos           String
+  aparencia_geral String
 
-  userId           Int
-  user             tab_user                @relation(fields: [userId], references: [id])
+  // Atributos principais
+  conhecimento   Int
+  habilidade     Int
+  vigor          Int
+  folego         Int
+  fe             Int
+  magnetismo     Int
+  acao_extra     Int
+  peso_maximo    Int
+  dano_adicional Int
 
-  attributes       tab_character_attributes?
-  hierarchy        tab_character_hierarchy?
-  finances         tab_character_finances?
-  skills           tab_character_skills[]
-}
+  // Hierarquia
+  nivel_atual              Int
+  pontos_troca_atual       Int
+  pontos_troca_necessarios Int
 
-model tab_character_attributes {
-  id               Int           @id @default(autoincrement())
-  conhecimento     Int
-  habilidade       Int
-  vigor            Int
-  peso_maximo      Int
-  dano_adicional   Int
-  folego           Int
-  fe               Int
-  magnetismo       Int
-  acao_extra       String
+  // Finanças
+  moedas_ouro  Int
+  moedas_prata Int
+  moedas_cobre Int
 
-  characterId      Int           @unique
-  character        tab_character @relation(fields: [characterId], references: [id])
-}
+  userId Int
+  user   tab_user @relation(fields: [userId], references: [id])
 
-model tab_character_hierarchy {
-  id                        Int           @id @default(autoincrement())
-  nivel_atual               Int
-  pontos_troca_atual        Int
-  pontos_troca_necessarios  Int
-
-  characterId               Int           @unique
-  character                 tab_character @relation(fields: [characterId], references: [id])
-}
-
-model tab_character_finances {
-  id            Int           @id @default(autoincrement())
-  moedas_ouro   Int
-  moedas_prata  Int
-  moedas_cobre  Int
-
-  characterId   Int           @unique
-  character     tab_character @relation(fields: [characterId], references: [id])
+  // Relacionamentos
+  skills  tab_character_skills[]
+  weapons tab_character_weapons[]
+  armors  tab_character_armors[]
+  items   tab_character_items[]
 }
 
 model tab_character_skills {
-  id                   Int           @id @default(autoincrement())
+  id                   Int    @id @default(autoincrement())
   nome                 String
   nivel_especializacao Int
   valor_teste          Int
 
-  characterId          Int
-  character            tab_character @relation(fields: [characterId], references: [id])
+  characterId Int
+  character   tab_character @relation(fields: [characterId], references: [id])
+}
+
+model tab_character_weapons {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  dano     String
+  tipo     String
+  peso     Float
+  desgaste Int
+  bonus    Int
+
+  characterId Int
+  character   tab_character @relation(fields: [characterId], references: [id])
+}
+
+model tab_character_armors {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  defesa   Int
+  tipo     String
+  peso     Float
+  desgaste Int
+  bonus    Int
+
+  characterId Int
+  character   tab_character @relation(fields: [characterId], references: [id])
+}
+
+model tab_character_items {
+  id         Int    @id @default(autoincrement())
+  nome       String
+  descricao  String
+  quantidade Int
+  peso       Float     
+  characterId Int
+  character   tab_character @relation(fields: [characterId], references: [id])
 }
