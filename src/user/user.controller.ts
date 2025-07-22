@@ -1,7 +1,8 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { Prisma, tab_user } from '@prisma/client';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { CreateUserDTO } from './dto/create-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -10,9 +11,9 @@ export class UserController {
 
     @Post('signup')
     async signupUser(
-        @Body() userData: Prisma.tab_userCreateInput
+        @Body(new ValidationPipe()) createUserDto : CreateUserDTO
     ): Promise<tab_user> {
-        return this.userService.createUser(userData);
+        return this.userService.createUser(createUserDto);
     }
     @UseGuards(AuthGuard)
     @Get(':id')
