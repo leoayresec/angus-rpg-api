@@ -106,3 +106,25 @@ model tab_character_items {
   characterId Int
   character   tab_character @relation(fields: [characterId], references: [id])
 }
+
+model tab_stereotype {
+  id               Int     @id @default(autoincrement())
+  nome             String  @unique
+  descricao        String
+
+  // Bônus de atributos
+  conhecimento     Int
+  vigor            Int
+  habilidade       Int
+  magnetismo       Int
+  fe               Int
+
+  // Perícia gratuita (nome livre)
+  pericia_gratuita String
+  restricao_pericia String? // Ex: "exceto Bélicas", ou null
+
+  // Bônus de perícia e moedas
+  bonus_pericia    Int
+  bonus_moedas     Int
+
+}
