@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ParseIntP
 import { StereotypeService } from './stereotype.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 
-@Controller('stereotype')
+@Controller('stereotypes')
 export class StereotypeController {
   constructor(private readonly stereotypeService: StereotypeService) {}
 

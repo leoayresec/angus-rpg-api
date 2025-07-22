@@ -128,3 +128,17 @@ model tab_stereotype {
   bonus_moedas     Int
 
 }
+
+model tab_skill_type {
+  id      Int         @id @default(autoincrement())
+  name    String      @unique
+  skills  tab_skill[]
+}
+
+model tab_skill {
+  id            Int           @id @default(autoincrement())
+  name          String
+  describe      String
+  skillTypeId Int    @map("skill_type_id")
+  type     tab_skill_type @relation(fields: [skillTypeId], references: [id])
+}

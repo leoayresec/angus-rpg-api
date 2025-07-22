@@ -14,7 +14,7 @@ export class StereotypeService {
         });
     
         if (!stereotype) {
-          throw new NotFoundException(`Personagem com ID ${id} não encontrado`);
+          throw new NotFoundException(`Esteriótipo com ID ${id} não encontrado`);
         }
     
         return stereotype;
